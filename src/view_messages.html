@@ -37,6 +37,47 @@
       $('#map').css({'height': vph/1.75 + 'px'});
     }
   </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+
+        function feedDraw(message) {
+            var htmlMsg = $("<div></div>").text(message.text);
+            if (message.source == 1) {
+                htmlMsg.addClass('client');
+            } else {
+                htmlMsg.addClass('server');
+            }
+            $("#msg-feed").append(htmlMsg)
+        }
+
+        function send(message) {
+            //send to server
+            feedDraw(message);
+        }
+
+        $("#btn-send").on('click', function(){
+            var message = {
+                text: $("#msg-write").val(),
+                source: 1
+            }
+            send(message);
+
+        });
+
+
+        var a = setInterval(requestMsgFeed, 2000);
+        function requestMsgFeed() {
+            //request from server
+            var message = {
+                text: "abc", //message text
+                source: 0
+            }
+            feedDraw(message);
+        }
+    });
+  </script>
 </head>
 <body>
 <div class="container">
@@ -52,30 +93,30 @@
       </div>
       <div class="col-sm-9">
         <div id="msg-feed" class="msg-feed">
-          Message feed...
+          <!-- Message feed... -->
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-3">
-        
+
       </div>
       <div class="col-sm-9">
-        
-      
+
+
     <div class="input-group msg-box">
-      <input type="text" class="form-control" placeholder="Your message...">
+      <input id="msg-write" type="text" class="form-control" placeholder="Your message...">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Send</button>
+        <button id="btn-send" class="btn btn-default" type="button">Send</button>
       </span>
     </div><!-- /input-group -->
-  
-        
+
+
       </div>
-    </div>  
+    </div>
   </div>
-  
-  
+
+
 </div>
 
 </body>
