@@ -27,16 +27,68 @@
               var mapCanvas = document.getElementById('map');
               var mapOptions = {
                   center: new google.maps.LatLng(pos.x, pos.y),
-                  zoom: 10,
+                  zoom: 15,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
               }
               var map = new google.maps.Map(mapCanvas, mapOptions)
-
+              /*
               var marker=new google.maps.Marker({
                   position: {lat: pos.x, lng: pos.y} ,
               });
-
               marker.setMap(map);
+              */
+              var cityCircle = new google.maps.Circle({
+                  strokeColor: '#00BFFF',
+                  strokeOpacity: 1,
+                  strokeWeight: 1,
+                  fillColor: '#00BFFF',
+                  fillOpacity: 0.35,
+                  map: map,
+                  center: {lat: pos.x, lng: pos.y},
+                  radius: 200
+              });
+
+              $(document).ready(function(){
+
+
+                  function feedDraw(message) {
+                      var htmlMsg = $("<div></div>").text(message.text);
+                      if (message.source == 1) {
+                          htmlMsg.addClass('client');
+                      } else {
+                          htmlMsg.addClass('server');
+                      }
+                      $("#msg-feed").append(htmlMsg)
+                  }
+
+                  function send(message) {
+                      //send to server
+                      feedDraw(message);
+                  }
+
+                  $("#btn-send").on('click', function(){
+                      var message = {
+                          text: $("#msg-write").val(),
+                          source: 1
+                      }
+                      $("#msg-write").fadeToggle(150, function() {
+                          $(this).val('').fadeToggle(150);
+                      });
+                      send(message);
+
+                  });
+
+
+                  var a = setInterval(requestMsgFeed, 2000);
+                  function requestMsgFeed() {
+                      //request from server
+                      var message = {
+                          text: "abc", //message text
+                          source: 0
+                      }
+                      feedDraw(message);
+                  }
+              });
           }
       }
       google.maps.event.addDomListener(window, 'load', initialize);
@@ -59,47 +111,6 @@
   </script>
 
   <script type="text/javascript">
-    $(document).ready(function(){
-
-
-        function feedDraw(message) {
-            var htmlMsg = $("<div></div>").text(message.text);
-            if (message.source == 1) {
-                htmlMsg.addClass('client');
-            } else {
-                htmlMsg.addClass('server');
-            }
-            $("#msg-feed").append(htmlMsg)
-        }
-
-        function send(message) {
-            //send to server
-            feedDraw(message);
-        }
-
-        $("#btn-send").on('click', function(){
-            var message = {
-                text: $("#msg-write").val(),
-                source: 1
-            }
-            $("#msg-write").fadeToggle(150, function() {
-                $(this).val('').fadeToggle(150);
-            });
-            send(message);
-
-        });
-
-
-        var a = setInterval(requestMsgFeed, 2000);
-        function requestMsgFeed() {
-            //request from server
-            var message = {
-                text: "abc", //message text
-                source: 0
-            }
-            feedDraw(message);
-        }
-    });
   </script>
 </head>
 <body>
