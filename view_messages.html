@@ -52,12 +52,17 @@
 
 
                   function feedDraw(message) {
-                      var htmlMsg = $("<div></div>").text(message.text);
+                      var htmlMsg = $("<div></div>").append("<p>" + message.text + "</p>");
                       if (message.source == 1) {
                           htmlMsg.addClass('client');
                       } else {
                           htmlMsg.addClass('server');
                       }
+                      var meta_data = $("<span></span>").append(message.source == 1 ? 'You' : message.source)
+                                        .addClass('source')
+                                        .addClass('text-muted');
+
+                      htmlMsg.append(meta_data)
                       $("#msg-feed").append(htmlMsg)
                   }
 
@@ -69,7 +74,7 @@
                   $("#btn-send").on('click', function(){
                       var message = {
                           text: $("#msg-write").val(),
-                          source: 1
+                          source: 1,
                       }
                       $("#msg-write").fadeToggle(150, function() {
                           $(this).val('').fadeToggle(150);
@@ -83,8 +88,8 @@
                   function requestMsgFeed() {
                       //request from server
                       var message = {
-                          text: "abc", //message text
-                          source: 0
+                          text: "abalksdjfaklsdjflkasjdlfasjlfkdjkajflsdkjfalskdjlakjfsladaksdjflaksdjlfaksjdflkasjdlfkajsdklfsajlsdkfjalskdjfalkdjflaksdjfslakdjflakdjflsakdjflaksj lakjflakdsj flaksdj flka djsflkajd klafj dklajflkdsj flaksdj flaksdjflaksjd flkaj sdlkfj asdlkfjalsdkfj alksd", //message text
+                          source: 'anonymous',
                       }
                       feedDraw(message);
                   }
