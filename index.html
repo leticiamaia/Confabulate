@@ -111,7 +111,7 @@
       vpw = $(window).width();
       vph = $(window).height();
       $('#msg-feed').css({'height': vph/1.75 + 'px'});
-      $('#map').css({'height': vph/1.75 + 'px'});
+      //$('#map').css({'height': vph/1.75 + 'px'});
     }
   </script>
 
@@ -159,4 +159,51 @@
 </div>
 
 </body>
+
+
+<script>
+    /*
+
+    curl -X POST -H "X-mmx-app-id:aj0ifklmyq5" -H "X-mmx-api-key:9b516293-6b65-43e2-b083-812a472f1339"
+    -H "Content-Type: application/json"
+    -d '{"content": {"message":"Company lunch is served","messageType":"normal",
+     "contentType":"text", "userID":"1"}}'
+      https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/publish
+
+ curl -X GET -H "X-mmx-app-id:aj0ifklmyq5"
+ -H "X-mmx-api-key:9b516293-6b65-43e2-b083-812a472f1339"
+  -H "Content-Type: application/json"
+   "https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/items?size=10&dateSince=2015-02-17T15%3A16%3A14-05%3A00"
+    */
+    $(document).ready(function() {
+        var url = "https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/publish"
+        $.ajax({
+            headers: {
+                'X-mmx-app-id': 'aj0ifklmyq5',
+                'X-mmx-api-key': '9b516293-6b65-43e2-b083-812a472f1339',
+                'Content-Type': 'application/json',
+
+            },
+            url: url,
+            dataType: 'jsonp',
+            type: "POST",
+            data: {
+                "message":"Mensagem de Teste",
+                "messageType":"normal",
+                "contentType":"text",
+                "userID":"1"
+            },
+            success: function(result,status,xhr) {
+                console.log('DEU CERTO O/');
+            },
+            error: function(xhr,status,error) {
+                console.log(':(');
+            }
+        });
+    });
+
+
+</script>
+
+
 </html>
