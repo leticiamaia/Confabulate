@@ -176,22 +176,24 @@
    "https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/items?size=10&dateSince=2015-02-17T15%3A16%3A14-05%3A00"
     */
     $(document).ready(function() {
-        var url = "https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/publish"
+        //var url = "https://prod-mmx-001.magnet.com:5221/mmxmgmt/api/v1/topics/all_confabulate/publish"
+        var url = "http://10.142.27.146:5220/mmxmgmt/api/v1/topics/all_confabulate/publish"
         $.ajax({
             headers: {
-                'X-mmx-app-id': 'aj0ifklmyq5',
-                'X-mmx-api-key': '9b516293-6b65-43e2-b083-812a472f1339',
+                'X-mmx-app-id': '37iiflwt16v',
+                'X-mmx-api-key': '4c18f47c-704f-4bfd-8e07-7a18a3f7c1c8',
                 'Content-Type': 'application/json',
-
             },
             url: url,
-            dataType: 'jsonp',
-            type: "POST",
+            dataType: 'json',
+            type: "post",
             data: {
-                "message":"Mensagem de Teste",
-                "messageType":"normal",
-                "contentType":"text",
-                "userID":"1"
+                content: {
+                    "message": "Mensagem de Teste",
+                    "messageType": "normal",
+                    "contentType": "text",
+                    "userID": "1"
+                }
             },
             success: function(result,status,xhr) {
                 console.log('DEU CERTO O/');
